@@ -1,0 +1,87 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "FiraCode Nerd Font Mono";
+  font-weight: bold;
+  font-size: 13px;
+  min-height: 0;
+  color: #ebdbb2;
+}
+
+window#waybar {
+  background: rgba(29, 32, 33, 0.92);
+  border-bottom: 2px solid #3c3836;
+}
+
+/* Левая часть — воркспейсы и заголовок окна */
+#workspaces button {
+  padding: 0 8px;
+  color: #928374;
+  background: transparent;
+}
+
+#workspaces button.active {
+  color: #ebdbb2;
+  border-bottom: 2px solid #d65d0e;
+}
+
+#workspaces button:hover {
+  color: #ebdbb2;
+  background: #3c3836;
+}
+
+#window {
+  padding: 0 12px;
+  color: #a89984;
+  font-weight: normal;
+}
+
+/* Правая часть */
+#language {
+  padding: 0 8px;
+  color: #d79921;
+  border-bottom: 2px solid #d79921;
+}
+
+#pulseaudio {
+  padding: 0 8px;
+  color: #689d6a;
+  border-bottom: 2px solid #689d6a;
+}
+
+#pulseaudio.muted {
+  color: #cc241d;
+  border-bottom: 2px solid #cc241d;
+}
+
+#battery {
+  padding: 0 8px;
+  color: #458588;
+  border-bottom: 2px solid #458588;
+}
+
+#battery.warning {
+  color: #d79921;
+  border-bottom: 2px solid #d79921;
+}
+
+#battery.critical {
+  color: #cc241d;
+  border-bottom: 2px solid #cc241d;
+  animation: blink 0.5s step-end infinite alternate;
+}
+
+@keyframes blink {
+  to { opacity: 0.3; }
+}
+
+#clock {
+  padding: 0 10px;
+  color: #b16286;
+  border-bottom: 2px solid #b16286;
+}
+
+#tray {
+  padding: 0 6px;
+  color: #d65d0e;
+}

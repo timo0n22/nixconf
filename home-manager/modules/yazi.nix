@@ -1,0 +1,39 @@
+{ pkgs, config, ... }: {
+  programs.yazi = {
+    enable = true;
+    enableFishIntegration = true;
+
+    keymap = {
+      input.prepend_keymap = [
+        { run = "close";          on = [ "<C-q>" ]; }
+        { run = "close --submit"; on = [ "<Enter>" ]; }
+        { run = "escape";         on = [ "<Esc>" ]; }
+        { run = "backspace";      on = [ "<Backspace>" ]; }
+      ];
+      mgr.prepend_keymap = [
+        { run = "escape"; on = [ "<Esc>" ]; }
+        { run = "quit";   on = [ "q" ]; }
+        { run = "close";  on = [ "<C-q>" ]; }
+      ];
+    };
+
+    settings = {
+      mgr = {
+        ratio         = [ 1 2 5 ];
+        sort_dir_first = true;
+        linemode       = "mtime";
+        show_hidden    = true;
+      };
+      opener = {
+        edit = [{
+          run   = "${config.programs.helix.package}/bin/hx $@";
+          block = true;
+        }];
+        play = [{
+          run   = "mpv $@";
+          orphan = true;
+        }];
+      };
+    };
+  };
+}

@@ -1,0 +1,25 @@
+{
+  imports = [
+    ./atuin.nix
+    ./bat.nix
+    ./delta.nix
+    ./direnv.nix
+    ./eza.nix
+    ./firefox.nix
+    ./chromium.nix
+    ./fish.nix
+    ./fuzzel.nix
+    ./fzf.nix
+    ./git.nix
+    ./helix.nix
+    ./lang
+    ./niri.nix
+    ./ripgrep.nix
+    ./starship.nix
+    ./stylix.nix
+    ./waybar
+    ./yazi.nix
+    ./zellij.nix
+    ./zoxide.nix
+  ];
+}
