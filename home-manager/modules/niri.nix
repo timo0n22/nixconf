@@ -4,233 +4,188 @@
   programs.niri = {
     enable = true;
 
-    settings = {
-      # MacBook Air M2 — нативное Retina разрешение
-      # scale 2 = логические пиксели 1280x832
-      outputs."eDP-1" = {
-        scale = 2.0;
-      };
+    config = ''
+      // MacBook Air M2 — Retina, scale 2
+      output "eDP-1" {
+        scale 2.0
+      }
 
-      input = {
-        keyboard = {
-          xkb = {
-            layout  = "us,ru";
-            options = "grp:alt_shift_toggle";
-          };
-        };
-        touchpad = {
-          tap                = true;
-          natural-scroll     = true;
-          scroll-factor      = 0.3;
-          click-method       = "clickfinger";
-        };
-        mouse.natural-scroll = false;
-      };
-
-      layout = {
-        gaps = 12;
-        center-focused-column = "never";
-
-        preset-column-widths = [
-          { proportion = 0.33333; }
-          { proportion = 0.5; }
-          { proportion = 0.66667; }
-        ];
-
-        default-column-width = {};
-
-        focus-ring = {
-          width          = 4;
-          active-color   = "#83a598";
-          inactive-color = "#665c54";
-        };
-
-        border.off = true;
-
-        # Отступ сверху под waybar (высота 32px при scale 2 = 16 логических)
-        struts = {
-          top    = 0;
-          bottom = 0;
-          left   = 0;
-          right  = 0;
-        };
-      };
-
-      # Запуск при старте
-      spawn-at-startup = [
-        { command = [ "waybar" ]; }
-        { command = [ "wl-paste" "--type" "text"  "--watch" "cliphist" "store" ]; }
-        { command = [ "wl-paste" "--type" "image" "--watch" "cliphist" "store" ]; }
-        { command = [ "nm-applet" "--indicator" ]; }
-      ];
-
-      prefer-no-csd = true;
-
-      screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
-
-      animations = {
-        workspace-switch.off    = true;
-        window-open.off         = true;
-        window-close.off        = true;
-        horizontal-view-movement = {
-          duration-ms = 200;
-          easing      = "ease-out-cubic";
-        };
-      };
-
-      cursor = {
-        hide-when-typing      = true;
-        hide-after-inactive-ms = 10000;
-      };
-
-      # Правила для окон
-      window-rules = [
-        {
-          matches = [{ app-id = "^org\\.telegram\\.desktop$"; }];
-          open-on-workspace = "5";
+      input {
+        keyboard {
+          xkb {
+            layout "us,ru"
+            options "grp:win_space_toggle,caps:escape"
+          }
         }
-        {
-          matches = [{ app-id = "^vesktop$"; }];
-          open-on-workspace = "5";
+        touchpad {
+          natural-scroll
+          scroll-factor 0.3
+          click-method "clickfinger"
         }
-        {
-          matches = [{ app-id = "^obsidian$"; }];
-          open-on-workspace = "3";
+        mouse {
+          natural-scroll false
         }
-        {
-          matches = [{ app-id = "^mpv$"; }];
-          open-floating = true;
+      }
+
+      layout {
+        gaps 12
+        center-focused-column "never"
+
+        preset-column-widths {
+          proportion 0.33333
+          proportion 0.5
+          proportion 0.66667
         }
-        {
-          matches = [{ app-id = "^imv$"; }];
-          open-floating = true;
+
+        default-column-width {}
+
+        focus-ring {
+          width 4
+          active-color "#83a598"
+          inactive-color "#665c54"
         }
-        {
-          matches = [{ app-id = "^pavucontrol$"; }];
-          open-floating       = true;
-          default-column-width.fixed = 600;
+
+        border {
+          off
         }
-      ];
+      }
 
-      binds = with { mod = "Mod"; } ; {
-        # Подсказка горячих клавиш
-        "${mod}+Shift+Slash".action.show-hotkey-overlay = {};
+      prefer-no-csd
 
-        # Приложения
-        "${mod}+T".action.spawn    = [ "ghostty" ];
-        "${mod}+D".action.spawn    = [ "fuzzel" ];
-        "${mod}+E".action.spawn    = [ "ghostty" "-e" "yazi" ];
-        "${mod}+B".action.spawn    = [ "firefox" ];
+      screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
-        # Скриншоты
-        "Print".action.screenshot             = {};
-        "Ctrl+Print".action.screenshot-screen = {};
-        "Alt+Print".action.screenshot-window  = {};
+      cursor {
+        hide-when-typing
+        hide-after-inactive-ms 10000
+      }
 
-        # Звук
-        "XF86AudioRaiseVolume" = {
-          allow-when-locked = true;
-          action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+" ];
-        };
-        "XF86AudioLowerVolume" = {
-          allow-when-locked = true;
-          action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-" ];
-        };
-        "XF86AudioMute" = {
-          allow-when-locked = true;
-          action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
-        };
-        "XF86AudioMicMute" = {
-          allow-when-locked = true;
-          action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ];
-        };
+      spawn-at-startup "waybar"
+      spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+      spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+      spawn-at-startup "nm-applet" "--indicator"
 
-        # Яркость
-        "XF86MonBrightnessUp".action.spawn   = [ "brightnessctl" "s" "10%+" ];
-        "XF86MonBrightnessDown".action.spawn = [ "brightnessctl" "s" "10%-" ];
+      window-rule {
+        match app-id=r#"^org\.telegram\.desktop$"#
+        open-on-workspace "5"
+      }
 
-        # Управление окнами
-        "${mod}+Q".action.close-window = {};
+      window-rule {
+        match app-id="vesktop"
+        open-on-workspace "5"
+      }
 
-        "${mod}+H".action.focus-column-left  = {};
-        "${mod}+L".action.focus-column-right = {};
-        "${mod}+J".action.focus-window-down  = {};
-        "${mod}+K".action.focus-window-up    = {};
+      window-rule {
+        match app-id="obsidian"
+        open-on-workspace "3"
+      }
 
-        "${mod}+Left".action.focus-column-left  = {};
-        "${mod}+Right".action.focus-column-right = {};
-        "${mod}+Down".action.focus-window-down   = {};
-        "${mod}+Up".action.focus-window-up       = {};
+      window-rule {
+        match app-id="mpv"
+        open-floating true
+      }
 
-        "${mod}+Ctrl+H".action.move-column-left  = {};
-        "${mod}+Ctrl+L".action.move-column-right = {};
-        "${mod}+Ctrl+J".action.move-window-down  = {};
-        "${mod}+Ctrl+K".action.move-window-up    = {};
+      window-rule {
+        match app-id="imv"
+        open-floating true
+      }
 
-        "${mod}+Ctrl+Left".action.move-column-left  = {};
-        "${mod}+Ctrl+Right".action.move-column-right = {};
-        "${mod}+Ctrl+Down".action.move-window-down   = {};
-        "${mod}+Ctrl+Up".action.move-window-up       = {};
+      window-rule {
+        match app-id="pavucontrol"
+        open-floating true
+        default-column-width { fixed 600; }
+      }
 
-        "${mod}+Home".action.focus-column-first      = {};
-        "${mod}+End".action.focus-column-last        = {};
-        "${mod}+Ctrl+Home".action.move-column-to-first = {};
-        "${mod}+Ctrl+End".action.move-column-to-last   = {};
+      binds {
+        Mod+Shift+Slash { show-hotkey-overlay; }
 
-        # Ширина колонки
-        "${mod}+R".action.switch-preset-column-width = {};
-        "${mod}+F".action.maximize-column            = {};
-        "${mod}+Shift+F".action.fullscreen-window    = {};
-        "${mod}+C".action.center-column              = {};
-        "${mod}+Minus".action.set-column-width       = "-10%";
-        "${mod}+Equal".action.set-column-width       = "+10%";
-        "${mod}+Shift+Minus".action.set-window-height = "-10%";
-        "${mod}+Shift+Equal".action.set-window-height = "+10%";
+        Mod+T { spawn "ghostty"; }
+        Mod+D { spawn "fuzzel"; }
+        Mod+E { spawn "ghostty" "-e" "yazi"; }
+        Mod+B { spawn "firefox"; }
 
-        # Окна в/из колонки
-        "${mod}+Comma".action.consume-window-into-column    = {};
-        "${mod}+Period".action.expel-window-from-column     = {};
-        "${mod}+BracketLeft".action.consume-or-expel-window-left  = {};
-        "${mod}+BracketRight".action.consume-or-expel-window-right = {};
+        Print       { screenshot; }
+        Ctrl+Print  { screenshot-screen; }
+        Alt+Print   { screenshot-window; }
 
-        # Воркспейсы
-        "${mod}+U".action.focus-workspace-down         = {};
-        "${mod}+I".action.focus-workspace-up           = {};
-        "${mod}+Page_Down".action.focus-workspace-down = {};
-        "${mod}+Page_Up".action.focus-workspace-up     = {};
+        XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+        XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+        XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+        XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-        "${mod}+Ctrl+U".action.move-column-to-workspace-down = {};
-        "${mod}+Ctrl+I".action.move-column-to-workspace-up   = {};
+        XF86MonBrightnessUp   { spawn "brightnessctl" "s" "10%+"; }
+        XF86MonBrightnessDown { spawn "brightnessctl" "s" "10%-"; }
 
-        "${mod}+1".action.focus-workspace = 1;
-        "${mod}+2".action.focus-workspace = 2;
-        "${mod}+3".action.focus-workspace = 3;
-        "${mod}+4".action.focus-workspace = 4;
-        "${mod}+5".action.focus-workspace = 5;
-        "${mod}+6".action.focus-workspace = 6;
-        "${mod}+7".action.focus-workspace = 7;
-        "${mod}+8".action.focus-workspace = 8;
-        "${mod}+9".action.focus-workspace = 9;
+        Mod+Q { close-window; }
 
-        "${mod}+Ctrl+1".action.move-column-to-workspace = 1;
-        "${mod}+Ctrl+2".action.move-column-to-workspace = 2;
-        "${mod}+Ctrl+3".action.move-column-to-workspace = 3;
-        "${mod}+Ctrl+4".action.move-column-to-workspace = 4;
-        "${mod}+Ctrl+5".action.move-column-to-workspace = 5;
-        "${mod}+Ctrl+6".action.move-column-to-workspace = 6;
-        "${mod}+Ctrl+7".action.move-column-to-workspace = 7;
-        "${mod}+Ctrl+8".action.move-column-to-workspace = 8;
-        "${mod}+Ctrl+9".action.move-column-to-workspace = 9;
+        Mod+H     { focus-column-left; }
+        Mod+L     { focus-column-right; }
+        Mod+J     { focus-window-down; }
+        Mod+K     { focus-window-up; }
+        Mod+Left  { focus-column-left; }
+        Mod+Right { focus-column-right; }
+        Mod+Down  { focus-window-down; }
+        Mod+Up    { focus-window-up; }
 
-        # Буфер обмена
-        "${mod}+V".action.spawn = [
-          "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
-        ];
+        Mod+Ctrl+H     { move-column-left; }
+        Mod+Ctrl+L     { move-column-right; }
+        Mod+Ctrl+J     { move-window-down; }
+        Mod+Ctrl+K     { move-window-up; }
+        Mod+Ctrl+Left  { move-column-left; }
+        Mod+Ctrl+Right { move-column-right; }
+        Mod+Ctrl+Down  { move-window-down; }
+        Mod+Ctrl+Up    { move-window-up; }
 
-        # Выход
-        "${mod}+Shift+E".action.quit = {};
-        "${mod}+Shift+P".action.power-off-monitors = {};
-      };
-    };
+        Mod+Home      { focus-column-first; }
+        Mod+End       { focus-column-last; }
+        Mod+Ctrl+Home { move-column-to-first; }
+        Mod+Ctrl+End  { move-column-to-last; }
+
+        Mod+R        { switch-preset-column-width; }
+        Mod+F        { maximize-column; }
+        Mod+Shift+F  { fullscreen-window; }
+        Mod+C        { center-column; }
+        Mod+Minus    { set-column-width "-10%"; }
+        Mod+Equal    { set-column-width "+10%"; }
+        Mod+Shift+Minus { set-window-height "-10%"; }
+        Mod+Shift+Equal { set-window-height "+10%"; }
+
+        Mod+Comma        { consume-window-into-column; }
+        Mod+Period       { expel-window-from-column; }
+        Mod+BracketLeft  { consume-or-expel-window-left; }
+        Mod+BracketRight { consume-or-expel-window-right; }
+
+        Mod+U          { focus-workspace-down; }
+        Mod+I          { focus-workspace-up; }
+        Mod+Page_Down  { focus-workspace-down; }
+        Mod+Page_Up    { focus-workspace-up; }
+        Mod+Ctrl+U     { move-column-to-workspace-down; }
+        Mod+Ctrl+I     { move-column-to-workspace-up; }
+
+        Mod+1 { focus-workspace 1; }
+        Mod+2 { focus-workspace 2; }
+        Mod+3 { focus-workspace 3; }
+        Mod+4 { focus-workspace 4; }
+        Mod+5 { focus-workspace 5; }
+        Mod+6 { focus-workspace 6; }
+        Mod+7 { focus-workspace 7; }
+        Mod+8 { focus-workspace 8; }
+        Mod+9 { focus-workspace 9; }
+
+        Mod+Ctrl+1 { move-column-to-workspace 1; }
+        Mod+Ctrl+2 { move-column-to-workspace 2; }
+        Mod+Ctrl+3 { move-column-to-workspace 3; }
+        Mod+Ctrl+4 { move-column-to-workspace 4; }
+        Mod+Ctrl+5 { move-column-to-workspace 5; }
+        Mod+Ctrl+6 { move-column-to-workspace 6; }
+        Mod+Ctrl+7 { move-column-to-workspace 7; }
+        Mod+Ctrl+8 { move-column-to-workspace 8; }
+        Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+        Mod+V { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+        Mod+Shift+E { quit; }
+        Mod+Shift+P { power-off-monitors; }
+      }
+    '';
   };
 }
