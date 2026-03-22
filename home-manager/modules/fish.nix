@@ -4,9 +4,9 @@
 
     shellAliases = {
       # Nix / система
-      sw    = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 |& nom";
+      sw    = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 | nom";
       hms   = "home-manager switch --flake ~/flake#timon";
-      upd   = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --upgrade |& nom";
+      upd   = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --upgrade | nom";
       clean = "sudo nix-collect-garbage --delete-older-than 14d";
 
       # Редактор

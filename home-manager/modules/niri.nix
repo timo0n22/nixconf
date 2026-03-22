@@ -22,9 +22,6 @@
           scroll-factor 0.3
           click-method "clickfinger"
         }
-        mouse {
-          natural-scroll false
-        }
       }
 
       layout {
