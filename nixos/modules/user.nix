@@ -5,7 +5,7 @@
     defaultUserShell = pkgs.fish;
     users.${user} = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "video" "audio" "wireshark" ];
+      extraGroups  = [ "wheel" "networkmanager" "video" "audio" "wireshark" ];
     };
   };
 
@@ -16,9 +16,8 @@
   programs.wireshark.enable = true;
 
   environment.sessionVariables = {
-    EDITOR  = "hx";
-    VISUAL  = "hx";
-    GOPATH  = "$HOME/go";
-    GOBIN   = "$HOME/go/bin";
+    # EDITOR/VISUAL не задаём здесь — helix.defaultEditor = true в home-manager
+    GOPATH = "$HOME/go";
+    GOBIN  = "$HOME/go/bin";
   };
 }

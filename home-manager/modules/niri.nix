@@ -57,6 +57,10 @@
       }
 
       spawn-at-startup "waybar"
+      spawn-at-startup "swayidle" "-w"
+        "timeout" "300" "swaylock -f -c 000000"
+        "timeout" "600" "niri msg action power-off-monitors"
+        "before-sleep" "swaylock -f -c 000000"
       spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
       spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
       spawn-at-startup "nm-applet" "--indicator"
@@ -179,6 +183,8 @@
         Mod+Ctrl+9 { move-column-to-workspace 9; }
 
         Mod+V { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+        Mod+Shift+L { spawn "swaylock" "-f" "-c" "000000"; }
 
         Mod+Shift+E { quit; }
         Mod+Shift+P { power-off-monitors; }

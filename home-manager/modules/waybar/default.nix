@@ -6,13 +6,19 @@
     settings = {
       mainBar = {
         layer    = "top";
-        position = "top";
-        # Высота 32px. При scale=2 на M2 Air это 16 физических пикселей.
-        # Waybar займёт боковые зоны у челки, центр (где камера) — пустой.
-        height   = 32;
-        # Убираем центральный модуль — там челка с камерой
-        modules-left  = [ "niri/workspaces" "niri/window" ];
-        modules-right = [
+        position = "left";
+        # При scale=2 на M2 Air: 48 логических пикселей = 96 физических.
+        # Достаточно для иконок + короткого текста.
+        width    = 48;
+        exclusive = true;  # резервирует пространство слева, остальное — свободно
+
+        # Вертикальная боковая панель:
+        # top    — воркспейсы (сверху вниз)
+        # center — пусто (чтобы bottom всегда прижимался вниз)
+        # bottom — статусы
+        modules-top    = [ "niri/workspaces" ];
+        modules-center = [ ];
+        modules-bottom = [
           "niri/language"
           "pulseaudio"
           "battery"
@@ -23,52 +29,55 @@
         "niri/workspaces" = {
           format = "{icon}";
           format-icons = {
-            active = "";
+            active  = "●";
             default = "○";
           };
         };
 
-        "niri/window" = {
-          format     = "{title}";
-          max-length = 40;
-        };
+        # niri/window убран из боковой панели — слишком узко для заголовка
 
         "niri/language" = {
-          format-en = "EN";
-          format-ru = "RU";
-          tooltip   = false;
+          # Иконки вместо текста EN/RU — влезают в узкую панель
+          format-en = "🇺🇸";
+          format-ru = "🇷🇺";
+          tooltip   = true;
         };
 
         "pulseaudio" = {
-          format         = "{icon} {volume}%";
-          format-muted   = " muted";
-          format-bluetooth = " {volume}%";
+          # Только иконка + громкость (короткий формат для вертикальной панели)
+          format         = "{icon}\n{volume}%";
+          format-muted   = "󰝟\nmute";
+          format-bluetooth = "󰂯\n{volume}%";
           format-icons = {
-            headphones = "";
-            headset    = "";
-            default    = [ "" "" ];
+            headphones = "󰋋";
+            headset    = "󰋎";
+            default    = [ "󰕿" "󰖀" "󰕾" ];
           };
-          on-click = "pavucontrol";
-          tooltip  = false;
+          on-click  = "pavucontrol";
+          tooltip   = false;
+          scroll-step = 5;
         };
 
         "battery" = {
           states = { warning = 30; critical = 15; };
-          format          = "{icon} {capacity}%";
-          format-charging = " {capacity}%";
-          format-icons    = [ "" "" "" "" "" ];
+          format          = "{icon}\n{capacity}%";
+          format-charging = "󰂄\n{capacity}%";
+          format-icons    = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
           tooltip         = false;
         };
 
         "clock" = {
-          format     = " {:%H:%M}";
-          format-alt = " {:%d.%m.%Y}";
-          tooltip    = false;
+          # Вертикально: часы на одной строке, минуты на другой
+          format     = "{:%H}\n{:%M}";
+          format-alt = "{:%d\n%m}";
+          tooltip    = true;
+          tooltip-format = "{:%A, %d %B %Y}";
         };
 
         "tray" = {
-          icon-size = 14;
-          spacing   = 4;
+          icon-size     = 18;
+          spacing       = 4;
+          show-passive-items = true;
         };
       };
     };

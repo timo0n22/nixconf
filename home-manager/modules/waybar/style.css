@@ -1,87 +1,130 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Waybar — левая вертикальная боковая панель
+   MacBook Air M2, scale=2, Gruvbox Dark Medium
+   ───────────────────────────────────────────────────────────────────────── */
+
 * {
-  border: none;
+  border:        none;
   border-radius: 0;
-  font-family: "FiraCode Nerd Font Mono";
-  font-weight: bold;
-  font-size: 13px;
-  min-height: 0;
-  color: #ebdbb2;
+  /* ВАЖНО: оба шрифта — Nerd Font для иконок + запасной текстовый */
+  font-family:   "FiraCode Nerd Font Mono", "Noto Sans", "Noto Color Emoji";
+  font-weight:   bold;
+  font-size:     13px;
+  min-height:    0;
+  min-width:     0;
+  color:         #ebdbb2;
 }
 
+/* Сама панель */
 window#waybar {
-  background: rgba(29, 32, 33, 0.92);
-  border-bottom: 2px solid #3c3836;
+  background:   rgba(29, 32, 33, 0.92);
+  border-right: 2px solid #3c3836;   /* правый бордер — отделяет от экрана */
 }
 
-/* Левая часть — воркспейсы и заголовок окна */
+/* ── Воркспейсы ────────────────────────────────────────────────────────── */
+#workspaces {
+  padding: 8px 0;
+}
+
 #workspaces button {
-  padding: 0 8px;
-  color: #928374;
+  padding:    6px 0;
+  min-width:  48px;
+  color:      #928374;
   background: transparent;
+  border:     none;
 }
 
 #workspaces button.active {
-  color: #ebdbb2;
-  border-bottom: 2px solid #d65d0e;
+  color:        #ebdbb2;
+  border-left:  3px solid #d65d0e;   /* акцент слева у активного воркспейса */
+  background:   #3c3836;
 }
 
 #workspaces button:hover {
-  color: #ebdbb2;
+  color:      #ebdbb2;
   background: #3c3836;
 }
 
-#window {
-  padding: 0 12px;
-  color: #a89984;
-  font-weight: normal;
+/* ── Общие стили модулей в bottom ──────────────────────────────────────── */
+#language,
+#pulseaudio,
+#battery,
+#clock,
+#tray {
+  padding:    8px 0;
+  min-width:  48px;
+  /* Текст по центру в узкой панели */
+  margin:     2px 0;
 }
 
-/* Правая часть */
+/* ── Язык ──────────────────────────────────────────────────────────────── */
 #language {
-  padding: 0 8px;
-  color: #d79921;
-  border-bottom: 2px solid #d79921;
+  font-size:   18px;  /* флаги-эмодзи чуть крупнее */
+  border-left: 3px solid #d79921;
+  color:       #d79921;
+  padding:     6px 0;
 }
 
+/* ── Звук ──────────────────────────────────────────────────────────────── */
 #pulseaudio {
-  padding: 0 8px;
-  color: #689d6a;
-  border-bottom: 2px solid #689d6a;
+  color:       #689d6a;
+  border-left: 3px solid #689d6a;
 }
 
 #pulseaudio.muted {
-  color: #cc241d;
-  border-bottom: 2px solid #cc241d;
+  color:       #cc241d;
+  border-left: 3px solid #cc241d;
 }
 
+#pulseaudio.bluetooth {
+  color:       #b16286;
+  border-left: 3px solid #b16286;
+}
+
+/* ── Батарея ───────────────────────────────────────────────────────────── */
 #battery {
-  padding: 0 8px;
-  color: #458588;
-  border-bottom: 2px solid #458588;
+  color:       #458588;
+  border-left: 3px solid #458588;
 }
 
-#battery.warning {
-  color: #d79921;
-  border-bottom: 2px solid #d79921;
+#battery.charging {
+  color:       #b8bb26;
+  border-left: 3px solid #b8bb26;
 }
 
-#battery.critical {
-  color: #cc241d;
-  border-bottom: 2px solid #cc241d;
-  animation: blink 0.5s step-end infinite alternate;
+#battery.warning:not(.charging) {
+  color:       #d79921;
+  border-left: 3px solid #d79921;
+}
+
+#battery.critical:not(.charging) {
+  color:       #cc241d;
+  border-left: 3px solid #cc241d;
+  animation:   blink 0.5s step-end infinite alternate;
 }
 
 @keyframes blink {
   to { opacity: 0.3; }
 }
 
+/* ── Часы ──────────────────────────────────────────────────────────────── */
 #clock {
-  padding: 0 10px;
-  color: #b16286;
-  border-bottom: 2px solid #b16286;
+  color:       #b16286;
+  border-left: 3px solid #b16286;
+  font-size:   14px;
 }
 
+/* ── Трей ──────────────────────────────────────────────────────────────── */
 #tray {
-  padding: 0 6px;
-  color: #d65d0e;
+  border-left: 3px solid #504945;
+  padding:     6px 0;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background:       rgba(204, 36, 29, 0.2);
 }

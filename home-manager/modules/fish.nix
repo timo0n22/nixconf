@@ -48,8 +48,7 @@
 
     interactiveShellInit = ''
       set fish_greeting
-      set -gx EDITOR hx
-      set -gx VISUAL hx
+      # EDITOR/VISUAL задаются helix.defaultEditor = true в modules/helix.nix
       set -gx PATH $PATH $HOME/go/bin $HOME/.local/bin
 
       theme_gruvbox dark medium

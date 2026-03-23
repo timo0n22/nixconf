@@ -16,17 +16,17 @@
     brightnessctl      # яркость экрана
     cliphist           # история буфера обмена
     ffmpeg             # обработка видео/аудио
-    fzf                # fuzzy поиск
+    # fzf — убран: управляется programs.fzf в modules/fzf.nix
     htop               # мониторинг процессов
     mediainfo          # инфо о медиафайлах
     microfetch         # минималистичный neofetch
     networkmanagerapplet # nm-applet в трее
     ntfs3g             # поддержка NTFS
     playerctl          # управление медиаплеером
-    ripgrep            # быстрый grep
+    # ripgrep — убран: управляется programs.ripgrep в modules/ripgrep.nix
     silicon            # красивые скриншоты кода
     swappy             # редактор скриншотов
-    udisks2            # монтирование дисков
+    udisks2            # CLI утилиты udisksctl (сервис включён в services.nix)
     unzip              # разархивирование
     wget               # скачивание файлов
     wl-clipboard       # буфер обмена Wayland
@@ -35,6 +35,8 @@
     yt-dlp             # скачивание видео
     zip                # архивирование
     libnotify          # notify-send
+    swaylock           # блокировка экрана (Wayland)
+    swayidle           # автоблокировка по таймеру
 
     # ── Go разработка ──────────────────────────────────────────────────────
     go
@@ -46,7 +48,7 @@
 
     # ── Security / TryHackMe / Bug bounty ─────────────────────────────────
     nmap
-    wireshark-qt
+    # wireshark-qt — убран: programs.wireshark.enable = true в user.nix
     burpsuite
     sqlmap
     ffuf
@@ -56,11 +58,12 @@
     hashcat
     netcat-gnu
     curl
+    yara               # анализ малвари / pattern matching (bug bounty / CTF)
 
     # ── Системные / разработка ─────────────────────────────────────────────
     nodejs
     python3
-    gnumake
+    # gnumake — убран: уже в local-packages.nix
     gcc
     nix-output-monitor  # красивый вывод nix build
     glib                # для уведомлений
