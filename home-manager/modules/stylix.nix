@@ -10,6 +10,11 @@
       helix.enable   = false;  # свой конфиг
       waybar.enable  = false;  # свой CSS
       firefox.enable = false;  # своя тема
+      fzf.enable   = false;
+      bat.enable   = false;
+      fish.enable   = false;
+      starship.enable   = false;
+      zellij.enable   = false;
     };
 
     cursor = {
