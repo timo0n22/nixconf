@@ -7,4 +7,5 @@
       options = "--delete-older-than 14d";
     };
   };
+  nix.settings.use-xdg-base-directories = true;
 }
