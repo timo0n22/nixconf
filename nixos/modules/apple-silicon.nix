@@ -2,26 +2,13 @@
 # Требует: firmware в /boot/asahi/ (кладётся Asahi-установщиком)
 { pkgs, ... }: {
 
-  hardware.asahi = {
-    enable = true;
-
-    # Путь к firmware — Asahi-инсталлятор кладёт их сюда
-    peripheralFirmwareDirectory = /boot/asahi;
-
-    # Speakersafetyd — ОБЯЗАТЕЛЕН для M2 Air:
-    # ограничивает мощность/температуру встроенных динамиков.
-    # Без него динамики работают, но можно их спалить на высокой громкости.
-    speakersafetyd.enable = true;
-  };
+  hardware.asahi.enable = true;
 
   # Libinput — тачпад и клавиатура
   services.libinput = {
     enable = true;
     touchpad = {
       disableWhileTyping = true;
-      naturalScrolling    = true;
-      tapping             = true;   # tap-to-click
-      tappingDragLock     = false;
     };
   };
 
