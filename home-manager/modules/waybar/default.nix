@@ -9,7 +9,7 @@
         position = "left";
         # При scale=2 на M2 Air: 48 логических пикселей = 96 физических.
         # Достаточно для иконок + короткого текста.
-        width    = 48;
+        width    = 24;
         exclusive = true;  # резервирует пространство слева, остальное — свободно
 
         # Вертикальная боковая панель:
@@ -45,9 +45,9 @@
 
         "pulseaudio" = {
           # Только иконка + громкость (короткий формат для вертикальной панели)
-          format         = "{icon}\n{volume}%";
+          format         = "{icon}\n{volume}";
           format-muted   = "󰝟\nmute";
-          format-bluetooth = "󰂯\n{volume}%";
+          format-bluetooth = "󰂯\n{volume}";
           format-icons = {
             headphones = "󰋋";
             headset    = "󰋎";
@@ -60,8 +60,8 @@
 
         "battery" = {
           states = { warning = 30; critical = 15; };
-          format          = "{icon}\n{capacity}%";
-          format-charging = "󰂄\n{capacity}%";
+          format          = "{icon}\n{capacity}";
+          format-charging = "󰂄\n{capacity}";
           format-icons    = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
           tooltip         = false;
         };
@@ -69,7 +69,7 @@
         "clock" = {
           # Вертикально: часы на одной строке, минуты на другой
           format     = "{:%H}\n{:%M}";
-          format-alt = "{:%d\n%m}";
+          format-alt = "{:%H\n%M}";
           tooltip    = true;
           tooltip-format = "{:%A, %d %B %Y}";
         };
