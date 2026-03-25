@@ -28,7 +28,7 @@ window#waybar {
 
 #workspaces button {
   padding:    6px 0;
-  min-width:  48px;
+  min-width:  36px;
   color:      #928374;
   background: transparent;
   border:     none;
@@ -52,7 +52,7 @@ window#waybar {
 #clock,
 #tray {
   padding:    8px 0;
-  min-width:  48px;
+  min-width:  36px;
   /* Текст по центру в узкой панели */
   margin:     2px 0;
 }
