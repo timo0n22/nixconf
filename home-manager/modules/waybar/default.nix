@@ -69,7 +69,7 @@
         "clock" = {
           # Вертикально: часы на одной строке, минуты на другой
           format     = "{:%H}\n{:%M}";
-          format-alt = "{:%H\n%M}";
+          format-alt = "{:%H}\n{:%M}";
           tooltip    = true;
           tooltip-format = "{:%A, %d %B %Y}";
         };

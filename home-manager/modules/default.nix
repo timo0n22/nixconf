@@ -13,6 +13,7 @@
     ./git.nix
     ./helix.nix
     ./lang
+    ./neovim.nix
     ./niri.nix
     ./ripgrep.nix
     ./starship.nix

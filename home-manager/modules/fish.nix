@@ -48,13 +48,12 @@
 
     interactiveShellInit = ''
       set fish_greeting
-      # EDITOR/VISUAL задаются helix.defaultEditor = true в modules/helix.nix
       set -gx PATH $PATH $HOME/go/bin $HOME/.local/bin
 
-      theme_gruvbox dark medium
-      fish_config theme choose Gruvbox
+      if type -q theme_gruvbox
+        theme_gruvbox dark medium
+      end
 
-      # Запуск niri при логине на tty1
       if status is-login && test "$XDG_VTNR" = "1"
         exec niri-session
       end
