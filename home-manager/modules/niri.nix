@@ -25,7 +25,7 @@
       }
 
       layout {
-        gaps 12
+        gaps 0
         center-focused-column "never"
 
         preset-column-widths {
@@ -37,7 +37,7 @@
         default-column-width {}
 
         focus-ring {
-          width 4
+          width 0
           active-color "#83a598"
           inactive-color "#665c54"
         }

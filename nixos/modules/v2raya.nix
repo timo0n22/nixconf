@@ -1,3 +1,6 @@
-{ ... }: {
-  services.v2raya.enable = true;
+{ pkgs, ... }: {
+  services.v2raya = {
+    enable = true;
+    corePackage = pkgs.xray;
+  };
 }
