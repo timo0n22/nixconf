@@ -16,9 +16,9 @@
         # top    — воркспейсы (сверху вниз)
         # center — пусто (чтобы bottom всегда прижимался вниз)
         # bottom — статусы
-        modules-top    = [ "niri/workspaces" ];
+        modules-left    = [ "niri/workspaces" ];
         modules-center = [ ];
-        modules-bottom = [
+        modules-right = [
           "niri/language"
           "pulseaudio"
           "battery"

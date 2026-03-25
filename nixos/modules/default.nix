@@ -9,6 +9,7 @@
     ./nix.nix
     ./services.nix       # udisks2, gvfs, dconf, polkit, fonts
     ./timezone.nix
+    ./v2raya.nix
     ./user.nix
     ./zram.nix
   ];
