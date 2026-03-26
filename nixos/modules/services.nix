@@ -1,5 +1,6 @@
 # Системные сервисы — dbus, монтирование, GTK, батарея
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   # udisks2 — монтирование USB/внешних дисков через dbus
   # (yazi, Thunar и др. используют его)
@@ -11,6 +12,10 @@
   # dconf — хранилище настроек GTK-приложений (pavucontrol, blueman и др.)
   programs.dconf.enable = true;
 
+  # kbd brightness
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*kbd_backlight*", ATTR{brightness}="128"
+  '';
   # upower — события батареи через dbus (waybar battery module)
   services.upower.enable = true;
 
@@ -18,13 +23,13 @@
   security.polkit.enable = true;
   # Агент polkit для Wayland (нужен для pkexec диалогов)
   systemd.user.services.polkit-agent = {
-    description   = "Polkit authentication agent";
-    wantedBy      = [ "graphical-session.target" ];
-    after         = [ "graphical-session.target" ];
+    description = "Polkit authentication agent";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
     serviceConfig = {
-      Type      = "simple";
+      Type = "simple";
       ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart   = "on-failure";
+      Restart = "on-failure";
     };
   };
 
@@ -38,12 +43,12 @@
       nerd-fonts.fira-code
     ];
     fontconfig = {
-      enable          = true;
+      enable = true;
       defaultFonts = {
         monospace = [ "FiraCode Nerd Font Mono" ];
         sansSerif = [ "Noto Sans" ];
-        serif     = [ "Noto Serif" ];
-        emoji     = [ "Noto Color Emoji" ];
+        serif = [ "Noto Serif" ];
+        emoji = [ "Noto Color Emoji" ];
       };
     };
   };

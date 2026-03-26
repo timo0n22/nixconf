@@ -1,8 +1,9 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   programs.helix = {
-    package        = pkgs.helix;
-    enable         = true;
-    defaultEditor  = true;
+    package = pkgs.helix;
+    enable = true;
+    defaultEditor = true;
 
     settings = {
       theme = "gruvbox";
@@ -17,19 +18,20 @@
           ":open %sh{cat /tmp/hx-yazi-chooser}"
           ":redraw"
         ];
-        # Показать горячие клавиши
-        "?" = "show_signature_help";
       };
 
       editor = {
-        line-number              = "relative";
-        rulers                   = [ 80 120 ];
-        jump-label-alphabet      = "hjklabcdefgimnopqrstuvwxyz";
-        true-color               = true;
-        cursorline               = true;
-        color-modes              = true;
-        soft-wrap.enable         = true;
-        end-of-line-diagnostics  = "hint";
+        line-number = "relative";
+        rulers = [
+          80
+          120
+        ];
+        jump-label-alphabet = "hjklabcdefgimnopqrstuvwxyz";
+        true-color = true;
+        cursorline = true;
+        color-modes = true;
+        soft-wrap.enable = true;
+        end-of-line-diagnostics = "hint";
 
         lsp = {
           display-inlay-hints = true;
@@ -40,7 +42,7 @@
         };
 
         file-picker = {
-          hidden    = false;   # показывать скрытые файлы
+          hidden = false; # показывать скрытые файлы
           git-ignore = true;
         };
 
@@ -69,9 +71,9 @@
         gopls = {
           command = "gopls";
           config = {
-            "formatting.gofumpt"              = true;
-            "ui.completion.usePlaceholders"   = true;
-            "ui.semanticTokens"               = true;
+            "formatting.gofumpt" = true;
+            "ui.completion.usePlaceholders" = true;
+            "ui.semanticTokens" = true;
           };
         };
         nil = {
@@ -79,26 +81,30 @@
         };
         yaml-language-server = {
           command = "yaml-language-server";
-          args    = [ "--stdio" ];
+          args = [ "--stdio" ];
         };
       };
 
       language = [
         {
-          name              = "go";
-          language-servers  = [ "gopls" ];
-          formatter         = { command = "gofmt"; };
-          auto-format       = true;
+          name = "go";
+          language-servers = [ "gopls" ];
+          formatter = {
+            command = "gofmt";
+          };
+          auto-format = true;
         }
         {
-          name              = "nix";
-          language-servers  = [ "nil" ];
-          formatter         = { command = "nixfmt"; };
-          auto-format       = true;
+          name = "nix";
+          language-servers = [ "nil" ];
+          formatter = {
+            command = "nixfmt";
+          };
+          auto-format = true;
         }
         {
-          name              = "yaml";
-          language-servers  = [ "yaml-language-server" ];
+          name = "yaml";
+          language-servers = [ "yaml-language-server" ];
         }
       ];
     };
