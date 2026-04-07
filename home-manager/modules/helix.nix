@@ -4,9 +4,15 @@
     package = pkgs.helix;
     enable = true;
     defaultEditor = true;
+    themes = {
+      gruvbox-black = {
+        inherits = "gruvbox";
+        "ui.background" = { };
+      };
+    };
 
     settings = {
-      theme = "gruvbox";
+      theme = "gruvbox-black";
 
       keys.normal = {
         # Space+e — открыть yazi как файловый пикер
@@ -17,6 +23,12 @@
           ":insert-output printf '\\x1b[?1049h\\x1b[?2004h' > /dev/tty"
           ":open %sh{cat /tmp/hx-yazi-chooser}"
           ":redraw"
+        ];
+      };
+      keys.insert = {
+        esc = [
+          "normal_mode"
+          ":sh niri msg action switch-layout 0"
         ];
       };
 

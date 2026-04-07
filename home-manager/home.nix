@@ -1,12 +1,14 @@
-{ homeStateVersion, user, ... }: {
+{ homeStateVersion, user, ... }:
+{
   imports = [
     ./modules
     ./home-packages.nix
   ];
 
   home = {
-    username      = user;
+    username = user;
     homeDirectory = "/home/${user}";
-    stateVersion  = homeStateVersion;
+    stateVersion = homeStateVersion;
+    file.".local/share/wallpaper.png".source = ./wallpaper.png;
   };
 }

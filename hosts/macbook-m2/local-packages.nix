@@ -1,5 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
+    xwayland-satellite
     # base-devel аналог
     gnumake
     cmake

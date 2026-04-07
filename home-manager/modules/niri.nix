@@ -1,4 +1,5 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+{
   imports = [ inputs.niri-flake.homeModules.niri ];
 
   programs.niri = {
@@ -7,7 +8,7 @@
     config = ''
       // MacBook Air M2 — Retina, scale 2
       output "eDP-1" {
-        scale 2.0
+        scale 1.5
       }
 
       input {
@@ -24,9 +25,15 @@
         }
       }
 
+      layer-rule {
+        match namespace="^wallpaper$"
+        place-within-backdrop true
+      }
+
       layout {
         gaps 0
         center-focused-column "never"
+        background-color "transparent"
 
         preset-column-widths {
           proportion 0.33333
@@ -61,10 +68,12 @@
       spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
       spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
       spawn-at-startup "nm-applet" "--indicator"
+      spawn-at-startup "swaybg" "-m" "fill" "-i" "/home/timon/.local/share/wallpaper.png"
 
       window-rule {
         match app-id=r#"^org\.telegram\.desktop$"#
-        open-on-workspace "5"
+        geometry-corner-radius 0
+        clip-to-geometry true
       }
 
       window-rule {
@@ -95,15 +104,16 @@
 
       binds {
         Mod+Shift+Slash { show-hotkey-overlay; }
+        Mod+Shift+W { spawn "sh" "-c" "pkill -SIGUSR1 waybar"; }
 
         Mod+T { spawn "ghostty"; }
         Mod+D { spawn "fuzzel"; }
         Mod+E { spawn "ghostty" "-e" "yazi"; }
         Mod+B { spawn "firefox"; }
 
-        Print       { screenshot; }
-        Ctrl+Print  { screenshot-screen; }
-        Alt+Print   { screenshot-window; }
+        Mod+Shift+4       { screenshot; }
+        Mod+Shift+5 { screenshot-screen; }
+        Mod+Shift+6   { screenshot-window; }
 
         XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
         XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
@@ -117,8 +127,8 @@
 
         Mod+H     { focus-column-left; }
         Mod+L     { focus-column-right; }
-        Mod+J     { focus-window-down; }
-        Mod+K     { focus-window-up; }
+        Mod+U     { focus-window-down; }
+        Mod+I     { focus-window-up; }
         Mod+Left  { focus-column-left; }
         Mod+Right { focus-column-right; }
         Mod+Down  { focus-window-down; }
@@ -126,8 +136,8 @@
 
         Mod+Ctrl+H     { move-column-left; }
         Mod+Ctrl+L     { move-column-right; }
-        Mod+Ctrl+J     { move-window-down; }
-        Mod+Ctrl+K     { move-window-up; }
+        Mod+Ctrl+U     { move-window-down; }
+        Mod+Ctrl+I     { move-window-up; }
         Mod+Ctrl+Left  { move-column-left; }
         Mod+Ctrl+Right { move-column-right; }
         Mod+Ctrl+Down  { move-window-down; }
@@ -152,12 +162,12 @@
         Mod+BracketLeft  { consume-or-expel-window-left; }
         Mod+BracketRight { consume-or-expel-window-right; }
 
-        Mod+U          { focus-workspace-down; }
-        Mod+I          { focus-workspace-up; }
+        Mod+J          { focus-workspace-down; }
+        Mod+K          { focus-workspace-up; }
         Mod+Page_Down  { focus-workspace-down; }
         Mod+Page_Up    { focus-workspace-up; }
-        Mod+Ctrl+U     { move-column-to-workspace-down; }
-        Mod+Ctrl+I     { move-column-to-workspace-up; }
+        Mod+Ctrl+J     { move-column-to-workspace-down; }
+        Mod+Ctrl+K     { move-column-to-workspace-up; }
 
         Mod+1 { focus-workspace 1; }
         Mod+2 { focus-workspace 2; }

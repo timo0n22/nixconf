@@ -10,6 +10,7 @@
     ./fish.nix
     ./fuzzel.nix
     ./fzf.nix
+    ./ghostty.nix
     ./git.nix
     ./helix.nix
     ./lang

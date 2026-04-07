@@ -1,20 +1,21 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   programs.fish = {
     enable = true;
 
     shellAliases = {
       # Nix / система
-      sw    = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --impure | nom";
-      hms   = "home-manager switch --flake ~/flake#timon";
-      upd   = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --upgrade | nom";
+      sw = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --impure | nom";
+      hms = "home-manager switch --flake ~/flake#timon";
+      upd = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --upgrade | nom";
       clean = "sudo nix-collect-garbage --delete-older-than 14d";
 
       # Редактор
-      v  = "hx";
+      v = "hx";
       hx = "hx";
 
       # Файлы
-      y  = "yazi";
+      y = "yazi";
       rd = "rm -rf";
 
       # Git
@@ -30,29 +31,34 @@
       gor = "go run .";
 
       # Навигация
-      ".."  = "cd ..";
+      ".." = "cd ..";
       "..." = "cd ../..";
 
       # Утилиты
       cat = "bat";
-      ls  = "eza";
-      ll  = "eza -la";
-      lt  = "eza --tree --level=2";
+      ls = "eza";
+      ll = "eza -la";
+      lt = "eza --tree --level=2";
     };
 
     plugins = [
-      { name = "gruvbox";        src = pkgs.fishPlugins.gruvbox.src; }
-      { name = "humantime-fish"; src = pkgs.fishPlugins.humantime-fish.src; }
-      { name = "plugin-git";     src = pkgs.fishPlugins.plugin-git.src; }
+      {
+        name = "gruvbox";
+        src = pkgs.fishPlugins.gruvbox.src;
+      }
+      {
+        name = "humantime-fish";
+        src = pkgs.fishPlugins.humantime-fish.src;
+      }
+      {
+        name = "plugin-git";
+        src = pkgs.fishPlugins.plugin-git.src;
+      }
     ];
 
     interactiveShellInit = ''
       set fish_greeting
       set -gx PATH $PATH $HOME/go/bin $HOME/.local/bin
-
-      if type -q theme_gruvbox
-        theme_gruvbox dark medium
-      end
 
       if status is-login && test "$XDG_VTNR" = "1"
         exec niri-session
@@ -85,7 +91,7 @@
       fish_color_cancel cc241d --reverse
       fish_pager_color_prefix 83a598
       fish_pager_color_progress 928374
-      fish_pager_color_selected_background --background=504945
+      fish_pager_color_selected_background --background=000000
     '';
   };
 }
