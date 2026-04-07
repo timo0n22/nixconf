@@ -10,14 +10,14 @@
         # При scale=2 на M2 Air: 48 логических пикселей = 96 физических.
         # Достаточно для иконок + короткого текста.
         width = 0;
-        height = 36;
+        height = 28;
         # exclusive = true; # резервирует пространство слева, остальное — свободно
 
         # Вертикальная боковая панель:
         # top    — воркспейсы (сверху вниз)
         # center — пусто (чтобы bottom всегда прижимался вниз)
         # bottom — статусы
-        modules-left = [ "niri/workspaces" ];
+        modules-left = [ ];
         modules-center = [ ];
         modules-right = [
           "niri/language"
@@ -26,16 +26,6 @@
           "clock"
           "tray"
         ];
-
-        "niri/workspaces" = {
-          format = "{icon}";
-          format-icons = {
-            active = "●";
-            default = "○";
-          };
-        };
-
-        # niri/window убран из боковой панели — слишком узко для заголовка
 
         "niri/language" = {
           # Иконки вместо текста EN/RU — влезают в узкую панель
@@ -88,8 +78,8 @@
 
         "clock" = {
           # Вертикально: часы на одной строке, минуты на другой
-          format = "{:%H %M}";
-          format-alt = "{:%H %M}";
+          format = "{:%H:%M}";
+          format-alt = "{:%H:%M}";
           tooltip = true;
           tooltip-format = "{:%A, %d %B %Y}";
         };

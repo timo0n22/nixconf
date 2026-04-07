@@ -12,37 +12,13 @@
   font-size:     13px;
   min-height:    0;
   min-width:     0;
-  color:         #ebdbb2;
+  color:         #000000;
 }
 
 /* Сама панель */
 window#waybar {
-  background:   rgba(0, 0, 0, 0.92);
+  background:   rgba(0, 0, 0, 0.9);
   border-right: 0px solid #3c3836;   /* правый бордер — отделяет от экрана */
-}
-
-/* ── Воркспейсы ────────────────────────────────────────────────────────── */
-#workspaces {
-  padding: 8px 0;
-}
-
-#workspaces button {
-  padding:    6px 0;
-  min-width:  36px;
-  color:      #928374;
-  background: transparent;
-  border:     none;
-}
-
-#workspaces button.active {
-  color:        #ebdbb2;
-  border-left:  3px solid #d65d0e;   /* акцент слева у активного воркспейса */
-  background:   #3c3836;
-}
-
-#workspaces button:hover {
-  color:      #ebdbb2;
-  background: #3c3836;
 }
 
 /* ── Общие стили модулей в bottom ──────────────────────────────────────── */
@@ -51,8 +27,8 @@ window#waybar {
 #battery,
 #clock,
 #tray {
-  padding:    8px 0;
-  min-width:  36px;
+  padding:    2px 0;
+  min-width:  28px;
   /* Текст по центру в узкой панели */
   margin:     2px 0;
 }
@@ -60,46 +36,38 @@ window#waybar {
 /* ── Язык ──────────────────────────────────────────────────────────────── */
 #language {
   font-size:   18px;  /* флаги-эмодзи чуть крупнее */
-  border-left: 3px solid #d79921;
   color:       #d79921;
-  padding:     6px 0;
+  padding:     2px 0;
 }
 
 /* ── Звук ──────────────────────────────────────────────────────────────── */
 #pulseaudio {
   color:       #689d6a;
-  border-left: 3px solid #689d6a;
 }
 
 #pulseaudio.muted {
   color:       #cc241d;
-  border-left: 3px solid #cc241d;
 }
 
 #pulseaudio.bluetooth {
   color:       #b16286;
-  border-left: 3px solid #b16286;
 }
 
 /* ── Батарея ───────────────────────────────────────────────────────────── */
 #battery {
   color:       #458588;
-  border-left: 3px solid #458588;
 }
 
 #battery.charging {
   color:       #b8bb26;
-  border-left: 3px solid #b8bb26;
 }
 
 #battery.warning:not(.charging) {
   color:       #d79921;
-  border-left: 3px solid #d79921;
 }
 
 #battery.critical:not(.charging) {
   color:       #cc241d;
-  border-left: 3px solid #cc241d;
   animation:   blink 0.5s step-end infinite alternate;
 }
 
@@ -110,13 +78,11 @@ window#waybar {
 /* ── Часы ──────────────────────────────────────────────────────────────── */
 #clock {
   color:       #b16286;
-  border-left: 3px solid #b16286;
   font-size:   14px;
 }
 
 /* ── Трей ──────────────────────────────────────────────────────────────── */
 #tray {
-  border-left: 3px solid #504945;
   padding:     6px 0;
 }
 
