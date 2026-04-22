@@ -38,9 +38,9 @@ in {
      ATTR{bDeviceClass}=="ef", \
      ENV{SMIUSBDISPLAY_DEVNAME}="$env{DEVNAME}", \
      ENV{SMIUSBDISPLAY_DEVICE_ID}="$env{ID_BUS}-$env{BUSNUM}-$env{DEVNUM}-$env{ID_SERIAL}", \
-     RUN+="/opt/siliconmotion/smi-udev.sh add $root $env{SMIUSBDISPLAY_DEVICE_ID} $env{SMIUSBDISPLAY_DEVNAME}"
+     RUN+="${pkg}/bin/smi-udev.sh add $root $env{SMIUSBDISPLAY_DEVICE_ID} $env{SMIUSBDISPLAY_DEVNAME}"
 
     ACTION=="remove", ATTR{bDeviceClass}=="ef", \
-     ENV{PRODUCT}=="90c/*", RUN+="/opt/siliconmotion/smi-udev.sh remove $root $env{DEVNAME}"
+     ENV{PRODUCT}=="90c/*", RUN+="${pkg}/bin/smi-udev.sh remove $root $env{DEVNAME}"
   '';
 }
