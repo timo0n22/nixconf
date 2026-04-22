@@ -71,5 +71,7 @@
 
     # unstable пакеты
     pkgs-unstable.ghostty
+    pkgs-unstable.claude-code
+    pkgs-unstable.zmk-studio
   ];
 }

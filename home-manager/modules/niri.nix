@@ -11,6 +11,59 @@
         scale 1.5
       }
 
+      // Внешние мониторы через DisplayLink
+      // Проверь точные имена: niri msg outputs
+      output "DL-1" {
+        mode "1920x1080@60"
+      }
+      output "DL-2" {
+        mode "2560x1440@60"
+      }
+
+      // Воркспейсы: 1-3 → DL-1, 4-10 → DL-2, 11+ → eDP-1 (ноутбук)
+      workspace "1" {
+        open-on-output "DL-1"
+      }
+      workspace "2" {
+        open-on-output "DL-1"
+      }
+      workspace "3" {
+        open-on-output "DL-1"
+      }
+      workspace "4" {
+        open-on-output "DL-2"
+      }
+      workspace "5" {
+        open-on-output "DL-2"
+      }
+      workspace "6" {
+        open-on-output "DL-2"
+      }
+      workspace "7" {
+        open-on-output "DL-2"
+      }
+      workspace "8" {
+        open-on-output "DL-2"
+      }
+      workspace "9" {
+        open-on-output "DL-2"
+      }
+      workspace "10" {
+        open-on-output "DL-2"
+      }
+      workspace "11" {
+        open-on-output "eDP-1"
+      }
+      workspace "12" {
+        open-on-output "eDP-1"
+      }
+      workspace "13" {
+        open-on-output "eDP-1"
+      }
+      workspace "14" {
+        open-on-output "eDP-1"
+      }
+
       input {
         keyboard {
           xkb {
@@ -74,16 +127,32 @@
         match app-id=r#"^org\.telegram\.desktop$"#
         geometry-corner-radius 0
         clip-to-geometry true
-      }
-
-      window-rule {
-        match app-id="vesktop"
         open-on-workspace "5"
       }
 
       window-rule {
         match app-id="obsidian"
+        open-on-workspace "1"
+      }
+
+      window-rule {
+        match app-id=r#"^[Cc]aido$"#
+        open-on-workspace "2"
+      }
+
+      window-rule {
+        match app-id="com.mitchellh.ghostty"
         open-on-workspace "3"
+      }
+
+      window-rule {
+        match app-id="firefox"
+        open-on-workspace "4"
+      }
+
+      window-rule {
+        match app-id="vesktop"
+        open-on-workspace "6"
       }
 
       window-rule {
@@ -104,7 +173,6 @@
 
       binds {
         Mod+Shift+Slash { show-hotkey-overlay; }
-        Mod+Shift+W { spawn "sh" "-c" "pkill -SIGUSR1 waybar"; }
 
         Mod+T { spawn "ghostty"; }
         Mod+D { spawn "fuzzel"; }
@@ -169,28 +237,40 @@
         Mod+Ctrl+J     { move-column-to-workspace-down; }
         Mod+Ctrl+K     { move-column-to-workspace-up; }
 
-        Mod+1 { focus-workspace 1; }
-        Mod+2 { focus-workspace 2; }
-        Mod+3 { focus-workspace 3; }
-        Mod+4 { focus-workspace 4; }
-        Mod+5 { focus-workspace 5; }
-        Mod+6 { focus-workspace 6; }
-        Mod+7 { focus-workspace 7; }
-        Mod+8 { focus-workspace 8; }
-        Mod+9 { focus-workspace 9; }
+        Mod+1 { focus-workspace "1"; }
+        Mod+2 { focus-workspace "2"; }
+        Mod+3 { focus-workspace "3"; }
+        Mod+4 { focus-workspace "4"; }
+        Mod+5 { focus-workspace "5"; }
+        Mod+6 { focus-workspace "6"; }
+        Mod+7 { focus-workspace "7"; }
+        Mod+8 { focus-workspace "8"; }
+        Mod+9 { focus-workspace "9"; }
+        Mod+0 { focus-workspace "10"; }
 
-        Mod+Ctrl+1 { move-column-to-workspace 1; }
-        Mod+Ctrl+2 { move-column-to-workspace 2; }
-        Mod+Ctrl+3 { move-column-to-workspace 3; }
-        Mod+Ctrl+4 { move-column-to-workspace 4; }
-        Mod+Ctrl+5 { move-column-to-workspace 5; }
-        Mod+Ctrl+6 { move-column-to-workspace 6; }
-        Mod+Ctrl+7 { move-column-to-workspace 7; }
-        Mod+Ctrl+8 { move-column-to-workspace 8; }
-        Mod+Ctrl+9 { move-column-to-workspace 9; }
+        // Воркспейсы на ноутбуке: Mod+Shift+1-3 → ws 11-13
+        Mod+Shift+1 { focus-workspace "11"; }
+        Mod+Shift+2 { focus-workspace "12"; }
+        Mod+Shift+3 { focus-workspace "13"; }
+
+        Mod+Ctrl+1 { move-column-to-workspace "1"; }
+        Mod+Ctrl+2 { move-column-to-workspace "2"; }
+        Mod+Ctrl+3 { move-column-to-workspace "3"; }
+        Mod+Ctrl+4 { move-column-to-workspace "4"; }
+        Mod+Ctrl+5 { move-column-to-workspace "5"; }
+        Mod+Ctrl+6 { move-column-to-workspace "6"; }
+        Mod+Ctrl+7 { move-column-to-workspace "7"; }
+        Mod+Ctrl+8 { move-column-to-workspace "8"; }
+        Mod+Ctrl+9 { move-column-to-workspace "9"; }
+        Mod+Ctrl+0 { move-column-to-workspace "10"; }
+
+        Mod+Ctrl+Shift+1 { move-column-to-workspace "11"; }
+        Mod+Ctrl+Shift+2 { move-column-to-workspace "12"; }
+        Mod+Ctrl+Shift+3 { move-column-to-workspace "13"; }
 
         Mod+V { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
 
+        Mod+Shift+W { spawn "sh" "-c" "pkill -SIGUSR1 waybar"; }
         Mod+Shift+L { spawn "swaylock" "-f" "-c" "000000"; }
 
         Mod+Shift+E { quit; }
