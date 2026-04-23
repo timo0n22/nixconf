@@ -1,27 +1,16 @@
-# Системные сервисы — dbus, монтирование, GTK, батарея
 { pkgs, ... }:
 {
-
-  # udisks2 — монтирование USB/внешних дисков через dbus
-  # (yazi, Thunar и др. используют его)
   services.udisks2.enable = true;
-
-  # gvfs — trash, MTP, сетевые папки (нужен yazi и файловым менеджерам)
   services.gvfs.enable = true;
-
-  # dconf — хранилище настроек GTK-приложений (pavucontrol, blueman и др.)
   programs.dconf.enable = true;
 
-  # kbd brightness
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*kbd_backlight*", ATTR{brightness}="128"
   '';
-  # upower — события батареи через dbus (waybar battery module)
-  services.upower.enable = true;
 
-  # Полицит для разрешений (монтирование без sudo и т.п.)
+  services.upower.enable = true;
   security.polkit.enable = true;
-  # Агент polkit для Wayland (нужен для pkexec диалогов)
+
   systemd.user.services.polkit-agent = {
     description = "Polkit authentication agent";
     wantedBy = [ "graphical-session.target" ];
@@ -33,7 +22,6 @@
     };
   };
 
-  # Системные шрифты
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [

@@ -40,15 +40,16 @@
     };
   };
 
-  # Бинарные кеши — ускоряет сборку helix и niri
   nixConfig = {
     extra-substituters = [
       "https://helix.cachix.org"
       "https://niri.cachix.org"
+      "https://nixos-apple-silicon.cachix.org"
     ];
     extra-trusted-public-keys = [
       "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
     ];
   };
 

@@ -12,10 +12,9 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];
-  # libstdc++ и libgcc_s из stdenv, libevdi обрабатываем вручную через симлинк
   buildInputs = [ libusb1 stdenv.cc.cc.lib ];
 
-  # evdi предоставляет libevdi.so с soname libevdi.so.1 — создаём симлинк вручную
+  # libevdi.so has soname libevdi.so.1 — autoPatchelf can't find it, symlink manually
   autoPatchelfIgnoreMissingDeps = [ "libevdi.so.1" ];
 
   dontBuild = true;
@@ -30,7 +29,6 @@ stdenv.mkDerivation {
     install -m755 ${./smi-udev.sh} $out/bin/smi-udev.sh
     install -m644 *.bin $out/share/smi-usb-display/
 
-    # Симлинк libevdi.so.1 → реальная библиотека из evdi пакета
     ln -sf ${evdi}/lib/libevdi.so $out/lib/libevdi.so.1
 
     runHook postInstall

@@ -16,7 +16,6 @@
     };
 
     interactiveShellInit = ''
-      # Подключаем grc fish-интеграцию если файл существует
       set -l grc_fish "${pkgs.grc}/share/fish/vendor_conf.d/grc.fish"
       if test -f $grc_fish
         source $grc_fish

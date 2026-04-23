@@ -18,7 +18,7 @@
         "browser.toolbars.bookmarks.visibility" = "never";
         "extensions.pocket.enabled"         = false;
         "browser.tabs.warnOnClose"          = false;
-        "media.ffmpeg.vaapi.enabled"        = true;  # GPU ускорение
+        "media.ffmpeg.vaapi.enabled"        = true;
         "media.hardware-video-decoding.force-enabled" = true;
         "gfx.webrender.all"                 = true;
         "widget.use-xdg-desktop-portal.file-picker" = 1;

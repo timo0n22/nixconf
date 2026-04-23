@@ -8,9 +8,9 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
 
     targets = {
-      helix.enable = false; # свой конфиг
-      waybar.enable = false; # свой CSS
-      firefox.enable = false; # своя тема
+      helix.enable = false;
+      waybar.enable = false;
+      firefox.enable = false;
       fzf.enable = false;
       bat.enable = false;
       fish.enable = false;
@@ -55,11 +55,9 @@
       light = "Papirus-Light";
     };
 
-    # Обои — можно заменить на свои
     image = ../wallpaper.png;
   };
 
-  # GTK тёмная тема
   gtk = {
     enable = true;
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;

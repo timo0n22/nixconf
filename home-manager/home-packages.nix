@@ -3,54 +3,47 @@
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
-    # ── Десктопные приложения ──────────────────────────────────────────────
-    obsidian # заметки markdown
-    telegram-desktop # Telegram
-    vesktop # Discord (Wayland)
-    mpv # видеоплеер
-    imv # просмотрщик изображений
-    pavucontrol # управление звуком GUI
-    pwvucontrol # pipewire volume control
+    obsidian
+    telegram-desktop
+    vesktop
+    mpv
+    imv
+    pavucontrol
+    pwvucontrol
 
-    # ── CLI утилиты ────────────────────────────────────────────────────────
-    bottom # системный монитор (btm)
-    brightnessctl # яркость экрана
-    cliphist # история буфера обмена
-    ffmpeg # обработка видео/аудио
-    # fzf — убран: управляется programs.fzf в modules/fzf.nix
-    htop # мониторинг процессов
-    mediainfo # инфо о медиафайлах
-    microfetch # минималистичный neofetch
-    networkmanagerapplet # nm-applet в трее
-    ntfs3g # поддержка NTFS
-    playerctl # управление медиаплеером
-    # ripgrep — убран: управляется programs.ripgrep в modules/ripgrep.nix
-    silicon # красивые скриншоты кода
-    swappy # редактор скриншотов
-    udisks2 # CLI утилиты udisksctl (сервис включён в services.nix)
-    unzip # разархивирование
-    wget # скачивание файлов
-    wl-clipboard # буфер обмена Wayland
-    wl-screenrec # запись экрана для Wayland
-    xdg-utils # xdg-open и др.
-    yt-dlp # скачивание видео
-    zip # архивирование
-    libnotify # notify-send
+    bottom
+    brightnessctl
+    cliphist
+    ffmpeg
+    htop
+    mediainfo
+    microfetch
+    networkmanagerapplet
+    ntfs3g
+    playerctl
+    silicon
+    swappy
+    udisks2
+    unzip
+    wget
+    wl-clipboard
+    wl-screenrec
+    xdg-utils
+    yt-dlp
+    zip
+    libnotify
     swaybg
-    swaylock # блокировка экрана (Wayland)
-    swayidle # автоблокировка по таймеру
+    swaylock
+    swayidle
 
-    # ── Go разработка ──────────────────────────────────────────────────────
     go
-    gopls # LSP
-    golangci-lint # линтер
-    delve # отладчик (dlv)
-    gotools # goimports, godoc и др.
-    goreleaser # релизы Go проектов
+    gopls
+    golangci-lint
+    delve
+    gotools
+    goreleaser
 
-    # ── Security / TryHackMe / Bug bounty ─────────────────────────────────
     nmap
-    # wireshark-qt — убран: programs.wireshark.enable = true в user.nix
     burpsuite
     sqlmap
     ffuf
@@ -60,16 +53,14 @@
     hashcat
     netcat-gnu
     curl
-    yara # анализ малвари / pattern matching (bug bounty / CTF)
+    yara
 
-    # ── Системные / разработка ─────────────────────────────────────────────
     nodejs
     python3
     gcc
-    nix-output-monitor # красивый вывод nix build
-    glib # для уведомлений
+    nix-output-monitor
+    glib
 
-    # unstable пакеты
     pkgs-unstable.ghostty
     pkgs-unstable.claude-code
     pkgs-unstable.zmk-studio

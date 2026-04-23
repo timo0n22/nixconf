@@ -2,7 +2,6 @@
 {
   environment.systemPackages = with pkgs; [
     xwayland-satellite
-    # base-devel аналог
     gnumake
     cmake
     pkg-config
@@ -10,7 +9,6 @@
     autoconf
     automake
     libtool
-    # Apple Silicon утилиты
     usbutils
     pciutils
   ];

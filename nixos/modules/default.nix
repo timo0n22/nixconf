@@ -1,14 +1,14 @@
 {
   imports = [
-    ./apple-silicon.nix  # firmware WiFi/BT/audio, libinput, power
+    ./apple-silicon.nix
     ./audio.nix
     ./bluetooth.nix
     ./boot.nix
     ./net.nix
     ./niri.nix
     ./nix.nix
-    ./services.nix       # udisks2, gvfs, dconf, polkit, fonts
-    ./smi-usb-display.nix  # Silicon Motion USB display (evdi + SMIUSBDisplayManager)
+    ./services.nix
+    ./smi-usb-display.nix
     ./timezone.nix
     ./v2raya.nix
     ./user.nix

@@ -48,7 +48,6 @@
         style      = "bold purple";
       };
 
-      # Отключаем ненужное
       time.disabled     = true;
       battery.disabled  = true;
       package.disabled  = true;

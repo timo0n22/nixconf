@@ -7,16 +7,9 @@
       mainBar = {
         layer = "top";
         position = "top";
-        # При scale=2 на M2 Air: 48 логических пикселей = 96 физических.
-        # Достаточно для иконок + короткого текста.
         width = 0;
         height = 28;
-        # exclusive = true; # резервирует пространство слева, остальное — свободно
 
-        # Вертикальная боковая панель:
-        # top    — воркспейсы (сверху вниз)
-        # center — пусто (чтобы bottom всегда прижимался вниз)
-        # bottom — статусы
         modules-left = [ ];
         modules-center = [ ];
         modules-right = [
@@ -28,14 +21,12 @@
         ];
 
         "niri/language" = {
-          # Иконки вместо текста EN/RU — влезают в узкую панель
           format-en = "🇺🇸";
           format-ru = "🇷🇺";
           tooltip = true;
         };
 
         "pulseaudio" = {
-          # Только иконка + громкость (короткий формат для вертикальной панели)
           format = "{icon} {volume}";
           format-muted = "󰝟 mute";
           format-bluetooth = "󰂯 {volume}";
@@ -77,7 +68,6 @@
         };
 
         "clock" = {
-          # Вертикально: часы на одной строке, минуты на другой
           format = "{:%H:%M}";
           format-alt = "{:%H:%M}";
           tooltip = true;

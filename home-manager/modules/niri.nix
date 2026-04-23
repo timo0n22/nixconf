@@ -6,13 +6,10 @@
     enable = true;
 
     config = ''
-      // MacBook Air M2 — Retina, scale 2
       output "eDP-1" {
         scale 1.5
       }
 
-      // Внешние мониторы через DisplayLink
-      // Проверь точные имена: niri msg outputs
       output "DL-1" {
         mode "1920x1080@60"
       }
@@ -20,7 +17,6 @@
         mode "2560x1440@60"
       }
 
-      // Воркспейсы: 1-3 → DL-1, 4-10 → DL-2, 11+ → eDP-1 (ноутбук)
       workspace "1" {
         open-on-output "DL-1"
       }
@@ -248,7 +244,6 @@
         Mod+9 { focus-workspace "9"; }
         Mod+0 { focus-workspace "10"; }
 
-        // Воркспейсы на ноутбуке: Mod+Shift+1-3 → ws 11-13
         Mod+Shift+1 { focus-workspace "11"; }
         Mod+Shift+2 { focus-workspace "12"; }
         Mod+Shift+3 { focus-workspace "13"; }

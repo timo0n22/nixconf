@@ -1,8 +1,6 @@
 { pkgs, config, lib, ... }: let
   h = s: "#${s}";
-
-  # Цвета из stylix
-  fgColor = config.lib.stylix.colors.base0D; # синий gruvbox
+  fgColor = config.lib.stylix.colors.base0D;
 in {
   options.zjstatus = with config.lib.stylix.colors;
     lib.options.mkOption {

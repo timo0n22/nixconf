@@ -4,37 +4,30 @@
     enable = true;
 
     shellAliases = {
-      # Nix / система
       sw = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --impure | nom";
       hms = "home-manager switch --flake ~/flake#timon";
       upd = "sudo nixos-rebuild switch --flake ~/flake#macbook-m2 --upgrade | nom";
       clean = "sudo nix-collect-garbage --delete-older-than 14d";
 
-      # Редактор
       v = "hx";
       hx = "hx";
 
-      # Файлы
       y = "yazi";
       rd = "rm -rf";
 
-      # Git
       gs = "git status";
       ga = "git add";
       gc = "git commit";
       gp = "git push";
       gl = "git log --oneline --graph";
 
-      # Go
       gob = "go build ./...";
       got = "go test ./...";
       gor = "go run .";
 
-      # Навигация
       ".." = "cd ..";
       "..." = "cd ../..";
 
-      # Утилиты
       cat = "bat";
       ls = "eza";
       ll = "eza -la";
@@ -66,7 +59,6 @@
     '';
   };
 
-  # Тема gruvbox для fish
   xdg.configFile."fish/themes/Gruvbox.theme" = {
     text = ''
       fish_color_normal ebdbb2

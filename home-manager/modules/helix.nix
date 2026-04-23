@@ -15,7 +15,6 @@
       theme = "gruvbox-black";
 
       keys.normal = {
-        # Space+e — открыть yazi как файловый пикер
         space.e = "file_explorer_in_current_buffer_directory";
         space.E = [
           ":sh rm -f /tmp/hx-yazi-chooser"
@@ -54,7 +53,7 @@
         };
 
         file-picker = {
-          hidden = false; # показывать скрытые файлы
+          hidden = false;
           git-ignore = true;
         };
 
@@ -77,7 +76,6 @@
       };
     };
 
-    # Языки LSP
     languages = {
       language-server = {
         gopls = {
