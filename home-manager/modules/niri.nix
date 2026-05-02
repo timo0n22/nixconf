@@ -1,51 +1,57 @@
 { inputs, pkgs, ... }:
+let
+  niri-patched = pkgs.niri-stable.override {
+    patches = [ ../../patches/niri-dmabuf-fix.patch ];
+  };
+in
 {
   imports = [ inputs.niri-flake.homeModules.niri ];
 
   programs.niri = {
     enable = true;
+    package = niri-patched;
 
     config = ''
       output "eDP-1" {
         scale 1.5
       }
 
-      output "DL-1" {
+      output "DVI-I-1" {
         mode "1920x1080@60"
       }
-      output "DL-2" {
-        mode "2560x1440@60"
+      output "DVI-I-2" {
+        mode "1920x1080@75"
       }
 
       workspace "1" {
-        open-on-output "DL-1"
+        open-on-output "DVI-I-1"
       }
       workspace "2" {
-        open-on-output "DL-1"
+        open-on-output "DVI-I-1"
       }
       workspace "3" {
-        open-on-output "DL-1"
+        open-on-output "DVI-I-1"
       }
       workspace "4" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "5" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "6" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "7" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "8" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "9" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "10" {
-        open-on-output "DL-2"
+        open-on-output "DVI-I-2"
       }
       workspace "11" {
         open-on-output "eDP-1"
@@ -270,6 +276,10 @@
 
         Mod+Shift+E { quit; }
         Mod+Shift+P { power-off-monitors; }
+      }
+
+      debug {
+        render-drm-device "/dev/dri/renderD128"
       }
     '';
   };

@@ -5,18 +5,20 @@ let
     evdi = config.boot.kernelPackages.evdi;
   };
   startScript = pkgs.writeShellScript "smiusbdisplay-start" ''
+    ${pkgs.kmod}/bin/modprobe evdi || exit 1
     ${pkg}/bin/SMIUSBDisplayManager &
     SMI_PID=$!
-    for i in $(seq 10); do
-      test -e /sys/class/drm/card1 && break
+    for i in $(seq 30); do
+      n=$(grep -l "^connected$" /sys/class/drm/*/status 2>/dev/null | grep -cv eDP)
+      [ "$n" -ge 1 ] && break
       sleep 1
     done
+    touch /run/smi-display-ready
     ${pkgs.systemd}/bin/systemd-notify --ready
     wait $SMI_PID
   '';
 in {
   boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
-  boot.kernelModules = [ "evdi" ];
 
   system.activationScripts.smi-usb-display = ''
     mkdir -p /opt/siliconmotion
@@ -29,21 +31,14 @@ in {
   systemd.services.smiusbdisplay = {
     description = "Silicon Motion USB Display Manager";
     after = [ "systemd-udevd.service" ];
-    before = [ "display-manager.service" ];
-    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "notify";
       NotifyAccess = "all";
       ExecStart = startScript;
+      ExecStopPost = "${pkgs.coreutils}/bin/rm -f /run/smi-display-ready";
       WorkingDirectory = "/opt/siliconmotion";
-      Restart = "always";
-      RestartSec = 5;
+      Restart = "no";
     };
-  };
-
-  systemd.services.display-manager = {
-    wants = [ "smiusbdisplay.service" ];
-    after = [ "smiusbdisplay.service" ];
   };
 
   services.udev.extraRules = ''
@@ -52,9 +47,12 @@ in {
      ATTR{bDeviceClass}=="ef", \
      ENV{SMIUSBDISPLAY_DEVNAME}="$env{DEVNAME}", \
      ENV{SMIUSBDISPLAY_DEVICE_ID}="$env{ID_BUS}-$env{BUSNUM}-$env{DEVNUM}-$env{ID_SERIAL}", \
-     RUN+="${pkg}/bin/smi-udev.sh add $root $env{SMIUSBDISPLAY_DEVICE_ID} $env{SMIUSBDISPLAY_DEVNAME}"
+     RUN+="${pkg}/bin/smi-udev.sh add $root $env{SMIUSBDISPLAY_DEVICE_ID} $env{SMIUSBDISPLAY_DEVNAME}", \
+     RUN+="${pkgs.systemd}/bin/systemctl start smiusbdisplay.service"
 
     ACTION=="remove", ATTR{bDeviceClass}=="ef", \
-     ENV{PRODUCT}=="90c/*", RUN+="${pkg}/bin/smi-udev.sh remove $root $env{DEVNAME}"
+     ENV{PRODUCT}=="90c/*", \
+     RUN+="${pkg}/bin/smi-udev.sh remove $root $env{DEVNAME}", \
+     RUN+="${pkgs.systemd}/bin/systemctl stop smiusbdisplay.service"
   '';
 }

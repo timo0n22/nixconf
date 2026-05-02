@@ -15,6 +15,7 @@
     ./helix.nix
     ./lang
     ./niri.nix
+    ./niri-smi-hotplug.nix
     ./ripgrep.nix
     ./starship.nix
     ./stylix.nix

@@ -109,3 +109,82 @@
 **Причина:** evdi vermagic mismatch (`6.19.9 SMP preempt` vs `6.19.9 SMP`) — smiusbdisplay падает и рестартует каждые 5 секунд, каждый раз генерируя USB-события. Несмотря на то что sw принёс ядро 6.19.11 (`current-system` → 6.19.11), после ребута загрузился старый образ 6.19.9 (`booted-system` → 6.19.9).
 
 **Решение:** повторный ребут — загрузчик возьмёт 6.19.11, vermagic совпадёт, evdi загрузится.
+
+---
+
+## 2026-04-27
+
+### Запрос
+При загрузке в 6.19.11 — чёрный экран (niri паника при DRM hotplug от evdi, загруженного до display-manager). Пользователь намеренно возвращался на 6.19.9 чтобы иметь доступ к системе. Цель: убрать причину чёрного экрана и сделать SMI on-demand — не запускать при загрузке, только при физическом подключении. После подключения автоматически перезагружать конфиг niri без ребута.
+
+### Действия
+
+| Файл | Действие | Детали |
+|---|---|---|
+| `nixos/modules/smi-usb-display.nix` | Изменён | Убран `boot.kernelModules = ["evdi"]` и `before`/`wantedBy` — сервис больше не стартует при загрузке |
+| `nixos/modules/smi-usb-display.nix` | Изменён | `modprobe evdi` перенесён в startScript; после поднятия дисплея пишется `/run/smi-display-ready`; `ExecStopPost` удаляет его |
+| `nixos/modules/smi-usb-display.nix` | Изменён | `Restart = "no"` — рестарт только через udev; udev rules добавлены `systemctl start/stop smiusbdisplay.service` |
+| `nixos/modules/smi-usb-display.nix` | Удалено | Зависимость `display-manager.service` от `smiusbdisplay.service` |
+| `home-manager/modules/niri-smi-hotplug.nix` | Создан | systemd user path unit следит за `/run/smi-display-ready`; при появлении файла — `niri msg action reload-config` |
+| `home-manager/modules/default.nix` | Добавлен импорт | `./niri-smi-hotplug.nix` |
+
+### Логика работы
+- **Без SMI устройства:** evdi не грузится, smiusbdisplay не запускается, niri стартует только с eDP-1. Воркспейсы 1-10 (DL-1/DL-2) временно падают на eDP-1.
+- **При подключении устройства:** udev → `systemctl start smiusbdisplay` → `modprobe evdi` → SMIUSBDisplayManager → DRM outputs появляются → `/run/smi-display-ready` создаётся → path unit → `niri msg action reload-config` → воркспейсы перераспределяются на DL-1/DL-2.
+- **При отключении:** udev → `systemctl stop smiusbdisplay` → `ExecStopPost` удаляет флаг → niri замечает DRM hotunplug и перемещает окна на eDP-1.
+
+### Важные заметки
+- Имена выходов DL-1/DL-2 в niri.nix — плейсхолдеры. После первого подключения запустить `niri msg outputs` и обновить имена.
+- Убрав evdi из boot.kernelModules и smiusbdisplay из before/wantedBy — должен исчезнуть чёрный экран на 6.19.11.
+- sw и hms прошли успешно. `niri-smi-hotplug.path` запущен.
+- **Итог:** после ребута в 6.19.11 и подключения адаптера — чёрный экран снова. Диагностика в сессии 2026-04-27 #3.
+
+---
+
+## 2026-04-27 #3
+
+### Симптом
+После hms и ребута в 6.19.11 — подключение адаптера → чёрный экран снова. render-drm-device фикс, возможно, не сработал или есть новая причина.
+
+### Диагностика (начата)
+Запрошены логи: `journalctl --boot -1 -p 4 | grep -i "niri\|evdi\|smi\|drm"` и `journalctl --boot -1 _COMM=niri | tail -30`.
+
+---
+
+## 2026-04-27 #4
+
+### Симптом
+После применения `render-drm-device "/dev/dri/renderD128"` через hms — паника niri сохраняется. Подключение SMI адаптера → вылет на логин-экран.
+
+### Диагноз
+`render-drm-device` меняет render node для рендеринга, но **не** исправляет `device_added`. В niri 25.08 `tty.rs:525`:
+```rust
+if node == self.primary_node || render_node == self.primary_render_node {
+    // ...
+    assert!(self.dmabuf_global.replace(dmabuf_global).is_none()); // line 572
+}
+```
+- DCP (card2): `try_get_render_node()` → renderD128 → `is_primary=true` → dmabuf_global set
+- evdi (card0/card3): `try_get_render_node()` → renderD128 → `is_primary=true` → PANIC
+
+Оба устройства получают renderD128 через EGL и попадают в блок. assert на второй вызов.
+
+### Фикс (backport из niri-unstable 2026-03-10)
+В niri-unstable `tty.rs:802`:
+```rust
+if render_node == Some(self.primary_render_node) && self.dmabuf_global.is_none() {
+```
+Добавлен `&& self.dmabuf_global.is_none()` — dmabuf_global инициализируется только ОДИН раз (первым устройством), последующие пропускаются.
+
+### Действия
+
+| Файл | Действие | Детали |
+|---|---|---|
+| `patches/niri-dmabuf-fix.patch` | Создан | Однострочный backport: `tty.rs:525` добавлен `&& self.dmabuf_global.is_none()` |
+| `home-manager/modules/niri.nix` | Изменён | `programs.niri.package = pkgs.niri-stable.override { patches = [ ./patches/niri-dmabuf-fix.patch ]; }` |
+
+### Статус
+hms применён 2026-04-28. Патченый niri собран и установлен.
+
+### После сборки
+Проверить подключение SMI адаптера — паника должна исчезнуть. Внешние мониторы должны появиться как DVI-I-1/DVI-I-2 в niri.
